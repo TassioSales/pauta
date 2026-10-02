@@ -1,0 +1,240 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* A newsroom desk: warm paper, black rules, one red pencil. */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-serif: "Source Serif 4 Variable", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --color-desk: #efeae0;
+  --color-paper: #fffdf8;
+  --color-wash: #f6f2e9;
+  --color-ink: #151515;
+  --color-ink-2: #4d4a45;
+  --color-ink-3: #8a857c;
+  --color-rule: #d9d2c4;
+  --color-red: #d6293e;
+  --color-red-soft: #fde2e4;
+  --color-marker: #ffe57a;
+  --color-marker-deep: #ffcf33;
+  --color-blue: #2450b8;
+  --color-green: #2f7d5b;
+  --color-green-soft: #d9f0e3;
+
+  --shadow-hard: 4px 4px 0 var(--color-ink);
+  --shadow-hard-sm: 2px 2px 0 var(--color-ink);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--color-desk);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #f8c9cf;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c9c1b0 transparent;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+}
+
+/* Five lines, like the staff the app is named after. */
+.staff {
+  background-image: repeating-linear-gradient(to bottom, var(--color-ink) 0 1.5px, transparent 1.5px 11px);
+  height: 46px;
+  opacity: 0.9;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+.rise {
+  animation: rise 0.16s ease-out;
+}
+
+/* ---- the document -------------------------------------------------------- */
+
+.doc {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--color-ink);
+  outline: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  caret-color: var(--color-red);
+}
+
+.doc .blk {
+  position: relative;
+  margin: 0;
+  padding: 3px 0;
+  min-height: 1.65em;
+}
+
+.doc .h1 {
+  font-family: var(--font-display);
+  font-size: 2.1em;
+  line-height: 1.15;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  padding-top: 0.5em;
+}
+.doc .h2 {
+  font-family: var(--font-display);
+  font-size: 1.5em;
+  line-height: 1.25;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  padding-top: 0.6em;
+}
+.doc .h3 {
+  font-family: var(--font-sans);
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-top: 1em;
+}
+.doc .blk:first-child {
+  padding-top: 0;
+}
+
+.doc .ul,
+.doc .ol,
+.doc .todo {
+  padding-left: 1.7em;
+}
+.doc .ul::before {
+  content: "";
+  position: absolute;
+  left: 0.5em;
+  top: 0.92em;
+  width: 6px;
+  height: 6px;
+  background: var(--color-red);
+}
+.doc .ol::before {
+  content: attr(data-n) ".";
+  position: absolute;
+  left: 0;
+  width: 1.3em;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  line-height: 2.35;
+  color: var(--color-red);
+  font-weight: 600;
+}
+.doc .todo .box {
+  position: absolute;
+  left: 0.15em;
+  top: 0.5em;
+  width: 17px;
+  height: 17px;
+  border: 2px solid var(--color-ink);
+  background: var(--color-paper);
+  cursor: pointer;
+  user-select: none;
+}
+.doc .todo.done .box {
+  background: var(--color-ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23fffdf8' stroke-width='2.2'/%3E%3C/svg%3E") center / 13px no-repeat;
+}
+.doc .todo.done [data-content] {
+  color: var(--color-ink-3);
+  text-decoration: line-through;
+}
+
+.doc .quote {
+  border-left: 3px solid var(--color-red);
+  padding-left: 1em;
+  font-style: italic;
+  color: var(--color-ink-2);
+}
+
+.doc .code {
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  line-height: 1.7;
+  background: var(--color-ink);
+  color: #f3efe6;
+  padding: 0 1em;
+}
+.doc .code.first {
+  padding-top: 0.8em;
+  margin-top: 0.5em;
+}
+.doc .code.last {
+  padding-bottom: 0.8em;
+  margin-bottom: 0.5em;
+}
+
+.doc .b {
+  font-weight: 700;
+}
+.doc .i {
+  font-style: italic;
+}
+.doc .s {
+  text-decoration: line-through;
+}
+.doc .c {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--color-wash);
+  border: 1px solid var(--color-rule);
+  padding: 0.08em 0.3em;
+}
+.doc .code .c {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 1em;
+}
+.doc a {
+  color: var(--color-blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.doc .cm {
+  background: var(--color-marker);
+  cursor: pointer;
+}
+.doc .cm.on {
+  background: var(--color-marker-deep);
+  box-shadow: 0 2px 0 var(--color-ink);
+}
+.doc[data-empty="true"] .blk:first-child [data-content]::before {
+  content: attr(data-placeholder);
+  color: var(--color-ink-3);
+  pointer-events: none;
+  position: absolute;
+}
